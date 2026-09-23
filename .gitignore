@@ -1,0 +1,15 @@
+node_modules/
+
+# Secrets and wallets. Never commit either.
+.env
+*.pem
+keypair.json
+*-keypair.json
+id.json
+
+# Agent state: run journal and memory.
+.ape/
+
+# Local build and demo scratch.
+frames/
+*.log

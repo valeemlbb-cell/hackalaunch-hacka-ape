@@ -1,0 +1,22 @@
+{
+  "name": "ape-groom",
+  "version": "0.1.0",
+  "description": "APE (Autonomous Primate Engine) that grooms a Solana wallet: finds dead SPL token accounts and reclaims the rent locked inside them.",
+  "type": "module",
+  "bin": {
+    "ape": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.js\"",
+    "ape": "node src/cli.js",
+    "seed": "node scripts/seed-devnet.mjs"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.95.4"
+  }
+}
