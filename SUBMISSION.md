@@ -1,3 +1,56 @@
+<!-- generated-header v2 -->
+# SUBMISSION — hacka-ape
+
+Paste-ready. Five fields, in the order the HackaLaunch form asks for them.
+Refreshed 2026-09-24T05:06:10+07:00.
+
+---
+
+## TITLE  (65/80 chars)
+
+```
+ape-groom — an autonomous primate that closes dead token accounts
+```
+
+## DESCRIPTION  (1492 chars)
+
+```
+ape-groom grooms a Solana wallet and hands back the SOL locked in dead token accounts.
+
+What it does: every SPL token account is rent-exempt, which means roughly 0.002 SOL sits locked inside it forever until somebody closes it. Every airdrop you ignored, every token you sold, every pool you exited left an empty account behind with your SOL in it, and nobody closes them by hand — an active wallet has hundreds. ape-groom runs the loop: look at every token account, decide which are dead, close them in batches, remember what it did, write it down.
+
+How it works: it enumerates token accounts, classifies each, and closes only what is provably safe. Accounts holding a balance are left alone; so are frozen ones, which the token program will not close anyway. Closes are batched into transactions, every signature is recorded, and the run report prints rent reclaimable, network fee and net to wallet in both SOL and lamports, so the arithmetic can be checked against the chain rather than believed.
+
+Real vs mocked: real. The recorded run in the README is a live run against a Solana validator — 10 accounts scanned, 8 closed, 2 correctly left alone (one frozen, one holding 1,250 tokens), 0.016314 SOL reclaimed for 10,000 lamports of fees across 2 transactions. The first transaction is confirmed on chain, 5 close instructions, err: null, wallet balance moved by exactly 5 × 0.00203928 SOL minus the fee. Devnet/local only.
+
+How to run: `npm install && npm test`, then the groom command.
+```
+
+## REPO URL
+
+```
+https://github.com/valeemlbb-cell/hackalaunch-hacka-ape
+```
+
+## VIDEO URL
+
+```
+VIDEO_URL_PENDING
+```
+
+> The main session posts `demo_x.mp4` from this folder to X and replaces the
+> line above with the public post URL. The form needs a **link**; a file is useless.
+
+## SOLANA PAYOUT ADDRESS
+
+```
+7W31iaCmjerN1jkpEnmZevn74SZxv83yEQvLsnc4PS7Q
+```
+
+---
+
+## Appendix — earlier submission notes (kept verbatim)
+
 # HACKA APE submission — `ape-groom`
 
 **Team:** Warung Ops (solo) · [@issue0x](https://x.com/issue0x) · rakavaleeqa@warungsosmed.store
@@ -45,9 +98,9 @@ This thing signs transactions on a loop while nobody is watching, so the guarant
 
 ## Honest disclosure
 
-- **All code here was written during the HACKA APE window.** No pre-hackathon code was carried in. The only third-party code is `@solana/web3.js` and `@solana/spl-token` — both Apache-2.0, unmodified, installed from npm. No assets beyond plain text.
+- **All code here was written during the HACKA APE window.** No pre-hackathon code was carried in. The only third-party code is `@solana/web3.js` (MIT) and `@solana/spl-token` (Apache-2.0) — both unmodified, installed from npm. No fonts, images, music or other assets are used in the repo or the video.
 - **The demo was recorded against a local Solana validator** (`solana-test-validator`), not public devnet, because the public devnet faucet was returning *"the airdrop faucet has run dry"* while I was recording. Same validator software, same SPL Token program, same real transactions. The agent runs identically against devnet with `APE_CLUSTER=devnet`.
-- **The video is a terminal playback rendered from the captured session**, not a screen capture. Every line of terminal text in it is the real, unedited output of the run described above; nothing was re-typed or staged.
+- **The video is a terminal playback rendered from the captured session**, not a screen capture. Every line of terminal text in it is the real, unedited output of the run described above; nothing was re-typed or staged. This is stated on the first card of the video itself and in the README's Disclosure section, not only here.
 
 ## Try it in four lines
 

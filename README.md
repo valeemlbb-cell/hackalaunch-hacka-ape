@@ -20,7 +20,7 @@ Primates groom each other to pick off the parasites. This one picks the dead acc
 
 ## Verified real run
 
-From the demo recording, against a live cluster — 10 token accounts, 8 of them dead:
+From the demo recording, against a live local validator (see [Disclosure](#disclosure)) — 10 token accounts, 8 of them dead:
 
 ```
   scanned   10 token accounts
@@ -177,13 +177,26 @@ cli.js         commands, flag parsing, the two-key execute rule
     └ journal.js    append-only record of every run
 ```
 
+### What it touches on chain
+
+Exactly two programs, both scanned and both closed through the standard `CloseAccount` instruction — no custom program is deployed and nothing else is ever signed:
+
+| Program | Address |
+|---|---|
+| SPL Token | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` |
+| SPL Token-2022 | `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb` |
+
+They are declared in [`src/constants.js`](src/constants.js) and nowhere else.
+
 `planner.js`, `policy.js`, `lamports.js` and `format.js` are pure functions — no network, no clock, no disk. That is why the interesting behaviour is cheap to test and safe to reason about.
 
 ## Disclosure
 
-**All code in this repository was written during the HACKA APE hackathon window.** No pre-hackathon code was carried in. The only third-party code is the two declared dependencies, `@solana/web3.js` and `@solana/spl-token` (both Apache-2.0, unmodified, installed from npm). No assets beyond plain text are used.
+**All code in this repository was written during the HACKA APE hackathon window.** No pre-hackathon code was carried in. The only third-party code is the two declared dependencies, `@solana/web3.js` (MIT) and `@solana/spl-token` (Apache-2.0) — both unmodified, installed from npm. No fonts, images, music or other assets are used anywhere in this repo or in the video.
 
-The demo was recorded against a local Solana validator (`solana-test-validator`) rather than public devnet, because the public devnet faucet was rate-limited and returning *"the airdrop faucet has run dry"* at the time of recording. It is the same validator software, the same SPL Token program and the same real transactions — and the agent runs identically against devnet by setting `APE_CLUSTER=devnet`.
+**The demo was recorded against a local Solana validator** (`solana-test-validator`) rather than public devnet, because the public devnet faucet was rate-limited and returning *"the airdrop faucet has run dry"* at the time of recording. It is the same validator software, the same SPL Token program and the same real transactions — and the agent runs identically against devnet by setting `APE_CLUSTER=devnet`.
+
+**The video is a terminal playback rendered from the captured session, not a screen capture.** The same statement is the first thing on screen in `demo.mp4`. Every line of terminal text in it is the real, unedited output of the run described above: the commands were run against the local validator, their stdout was captured to files, and the renderer only draws those captured lines one at a time. Nothing was re-typed, re-ordered or staged. The capture files and the renderer are reproducible from [RUN.md](RUN.md#reproducing-the-demo-run-yourself).
 
 ## Licence
 

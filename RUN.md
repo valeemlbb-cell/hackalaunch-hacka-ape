@@ -22,11 +22,22 @@ gh repo create ape-groom --public --source=. --remote=origin --push --descriptio
 
 If the name is taken, prefix it with the org or a suffix, e.g. `warung-ops/ape-groom` or `ape-groom-solana`.
 
-Verify:
+Verify, and note the org/user the repo actually landed under:
 
 ```bash
 gh repo view --web
+gh repo view --json nameWithOwner -q .nameWithOwner
 ```
+
+**Immediately after the push**, replace the `<your-org>` placeholder everywhere and push the fix, so no dead repo link can reach the submission field:
+
+```bash
+sed -i 's|<your-org>|<real-org>|g' README.md SUBMISSION.md
+grep -rn '<your-org>' README.md SUBMISSION.md && echo "STILL PLACEHOLDERS — fix before submitting" || echo "clean"
+git commit -am "docs: real repo URL" && git push
+```
+
+Substitute the owner from `gh repo view` above for `<real-org>`. On macOS use `sed -i ''` instead of `sed -i`.
 
 ## 2. Upload the demo video
 
@@ -40,17 +51,15 @@ The platform accepts YouTube, Loom, Vimeo or X. YouTube unlisted is the safest:
 3. Visibility: **Unlisted**
 4. Copy the link.
 
-## 3. Fill the two placeholders
+## 3. Fill in the video link
 
-In `SUBMISSION.md`, replace:
+Step 1 already removed the repo placeholder. The remaining one is the video:
 
-- `https://github.com/<your-org>/ape-groom` → the real repo URL from step 1
-- the demo video line → the real video URL from step 2
-
-Then commit and push the fix:
+In `SUBMISSION.md`, replace the **Demo video** line with the real URL from step 2, then:
 
 ```bash
-git add SUBMISSION.md README.md && git commit -m "docs: add repo and demo links" && git push
+grep -rn '<your-org>\|demo.mp4` — 2:00' README.md SUBMISSION.md   # must print nothing
+git commit -am "docs: add demo video link" && git push
 ```
 
 ## 4. Submit on the platform
